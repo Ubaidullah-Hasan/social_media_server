@@ -1,25 +1,32 @@
 import express from "express";
 import cors from "cors";
-import mysql from "mysql";
+import cookieParser from "cookie-parser";
 const app = express();
 const port = process.env.PORT || 8000;
+
+// IMPORT ROUTES 
+import authRoutes from "./routes/auth.js";
+// import userRoutes from "./routes/users.js";
+// import postRoutes from "./routes/posts.js";
+// import commentRoutes from "./routes/comments.js";
+// import likeRoutes from "./routes/likes.js";
+
+
 
 // MIDDLEWARE
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
-// DATABASE CONNECTIONS
-const dbConnection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'social_app'
-})
-// TEST DATABASE CONNECTIONS
-dbConnection.connect((err) => {
-    if (err)  return err;
-    console.log("DATABASE CONNECTION SUCCESSFUL");
-});
+
+
+
+// ROUTES USE
+app.use("/api/auth", authRoutes);
+// app.use("/api/users", userRoutes);
+// app.use("/api/posts", postRoutes);
+// app.use("/api/comments", commentRoutes);
+// app.use("/api/likes", likeRoutes);
 
 
 app.get('/', (req, res) => {
